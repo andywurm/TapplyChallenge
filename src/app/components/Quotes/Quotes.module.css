@@ -1,0 +1,56 @@
+.pfp{
+    border-radius: 20px;
+    margin-right: 3%;
+}
+
+.container{
+    border: solid rgb(188, 188, 188) 1px;
+    border-radius: 5px;
+    width: 80%;
+    margin: 4% auto;
+    padding: 2%;
+}
+
+.profileInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border: solid red 1px; */
+    color: rgb(76, 76, 76);
+}
+
+.time{
+    color: gray;
+    width: 100%;
+    text-align: right;
+    font-size: .8em;
+    margin-top: 1px;
+    /* border: solid red 1px; */
+}
+
+.quote{
+    padding: 7% 2%;
+    line-height: 1.5;
+}
+
+.postInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 96%;
+    margin: 0 auto 3% auto;
+    /* border: solid red 1px; */
+}
+
+.likeInfo{
+    display: flex;
+    align-items: center;
+    color: gray;
+}
+
+.delete{
+    margin-left: auto;
+    width: 40%;
+    display: flex;
+    justify-content: right;
+}

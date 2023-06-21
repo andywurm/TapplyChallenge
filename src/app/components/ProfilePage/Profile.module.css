@@ -1,0 +1,83 @@
+.userPfp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.pfp {
+  border-radius: 70px;
+  border: solid rgb(223, 223, 223) 1px;
+}
+
+.userNames {
+  margin-top: 5%;
+}
+
+.fullName {
+  font-size: 1.3em;
+}
+
+.username {
+  color: gray;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.btnContainer {
+  width: 75%;
+  margin-top: 5%;
+}
+
+.editBtn {
+  width: 100%;
+  padding: 3%;
+  background-color: rgba(76, 139, 255, 255);
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-size: 1.1em;
+}
+
+.noUserPosts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgb(155, 155, 155);
+  min-height: 40vh;
+}
+
+.icon {
+  opacity: 0.4;
+  margin-bottom: 2%;
+}
+
+.userInfo {
+  width: 75%;
+  margin: 10% auto;
+}
+
+.info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  color: rgb(43, 43, 43);
+}
+
+.inputs {
+  margin-top: 3%;
+  padding: 10px;
+  border: solid rgb(152, 152, 152) 1px;
+  border-radius: 4px;
+  font-size: 1.1em;
+}
+
+.yourPosts {
+  font-size: 1.3em;
+  font-weight: 500;
+  width: 80%;
+  margin: 10% auto 5% auto;
+}

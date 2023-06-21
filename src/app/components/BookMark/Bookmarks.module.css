@@ -1,0 +1,15 @@
+.BookmarkContainer{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    color: rgb(136, 136, 136);
+    font-size: 1.1em;
+    /* border: solid red 1px; */
+    height: 75vh;
+}
+
+.icon{
+    opacity: .4;
+    margin-bottom: 7%;
+}

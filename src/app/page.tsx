@@ -1,95 +1,97 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import { useState } from "react";
+import DisplayQuotes from "./components/DisplayQuote/DisplayQuotes";
+import styles from "./page.module.css";
+import Image from "next/image";
+import Profile from "./components/ProfilePage/Profile";
+import Bookmarks from "./components/BookMark/Bookmarks";
+import Messages from "./components/Message/Messages";
 
-export default function Home() {
+const Page = () => {
+  const [clicked, setClicked] = useState("Home");
+  const users = [
+    {
+      first: "Satomi",
+      last: "Ishihara",
+      username: "Satomi86",
+      email: "IshigamiKuniko@gmail.com",
+      DOB: "12/24/1986",
+      pfp: "/imgs/blank-pfp.png",
+      posts: [],
+    },
+    {
+      first: "Kazuya",
+      last: "Ohashi",
+      username: "Hassun",
+      email: "Ohashi.Kazuya@gmail.com",
+      DOB: "08/09/1997",
+      pfp: "/imgs/blank-pfp.png",
+      posts: [
+        {
+          time: "01/01/2023",
+          quote:
+            "Just one small positive thought in the morning can change your whole day.",
+          likes: 100,
+        },
+        {
+          time: "01/01/2023",
+          quote:
+            "Just one small positive thought in the morning can change your whole day.",
+          likes: 10,
+        },
+      ],
+    },
+  ];
+
+  const DisplayMidSection = () => {
+    if (clicked === "Home") {
+      return <DisplayQuotes />;
+    } else if (clicked === "Bookmark") {
+      return <Bookmarks />;
+    } else if (clicked === "Messages") {
+      return <Messages />;
+    } else {
+      return <Profile user={users[1]} />;
+    }
+  };
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className={styles.top}>
+      &quot; Q U O T E D &quot;
+      </div>
+
+      <DisplayMidSection />
+
+      <div className={styles.bottom}>
+        <div className={styles.bottomBar}>
+          <div
+            className={styles.barItems}
+            onClick={() => setClicked("Bookmark")}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            <Image src="/imgs/bookmark.png" width={25} height={25} alt="" />
+          </div>
+
+          <div className={styles.barItems} onClick={() => setClicked("Home")}>
+            <Image src="/imgs/home.png" width={25} height={25} alt="" />
+          </div>
+
+          <div
+            className={styles.barItems}
+            onClick={() => setClicked("Messages")}
+          >
+            <Image src="/imgs/chat.png" width={25} height={25} alt="" />
+          </div>
+
+          <div
+            className={styles.barItems}
+            onClick={() => setClicked("Profile")}
+          >
+            <Image src="/imgs/user.png" width={25} height={25} alt="" />
+          </div>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
-  )
-}
+  );
+};
+export default Page;
