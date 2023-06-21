@@ -45,7 +45,7 @@ const Page = () => {
 
   const DisplayMidSection = () => {
     if (clicked === "Home") {
-      return <DisplayQuotes />;
+      return <DisplayQuotes user={users[1]}/>;
     } else if (clicked === "Bookmark") {
       return <Bookmarks />;
     } else if (clicked === "Messages") {
