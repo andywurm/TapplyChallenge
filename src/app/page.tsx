@@ -10,40 +10,40 @@ import Login from "./components/Login/Login";
 
 const Page = () => {
   const [clicked, setClicked] = useState("Home");
-  const users: any = []
-  // const users = [
-  //   {
-  //     first: "Satomi",
-  //     last: "Ishihara",
-  //     username: "Satomi86",
-  //     email: "IshigamiKuniko@gmail.com",
-  //     DOB: "12/24/1986",
-  //     pfp: "/imgs/blank-pfp.png",
-  //     posts: [],
-  //   },
-  //   {
-  //     first: "Kazuya",
-  //     last: "Ohashi",
-  //     username: "Hassun",
-  //     email: "Ohashi.Kazuya@gmail.com",
-  //     DOB: "08/09/1997",
-  //     pfp: "/imgs/blank-pfp.png",
-  //     posts: [
-  //       {
-  //         time: "01/01/2023",
-  //         quote:
-  //           "Just one small positive thought in the morning can change your whole day.",
-  //         likes: 100,
-  //       },
-  //       {
-  //         time: "01/01/2023",
-  //         quote:
-  //           "Just one small positive thought in the morning can change your whole day.",
-  //         likes: 10,
-  //       },
-  //     ],
-  //   },
-  // ];
+  // const users: any = []
+  const users = [
+    {
+      first: "Satomi",
+      last: "Ishihara",
+      username: "Satomi86",
+      email: "IshigamiKuniko@gmail.com",
+      DOB: "12/24/1986",
+      pfp: "/imgs/blank-pfp.png",
+      posts: [],
+    },
+    {
+      first: "Kazuya",
+      last: "Ohashi",
+      username: "Hassun",
+      email: "Ohashi.Kazuya@gmail.com",
+      DOB: "08/09/1997",
+      pfp: "/imgs/blank-pfp.png",
+      posts: [
+        {
+          time: "01/01/2023",
+          quote:
+            "Just one small positive thought in the morning can change your whole day.",
+          likes: 100,
+        },
+        {
+          time: "01/01/2023",
+          quote:
+            "Just one small positive thought in the morning can change your whole day.",
+          likes: 10,
+        },
+      ],
+    },
+  ];
 
   const DisplayMidSection = () => {
     if (clicked === "Home") {

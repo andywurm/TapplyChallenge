@@ -16,15 +16,15 @@ const Login = () => {
     return (
         <div>
             {clicked ? (
-                <SignUp />
+                <SignUp clicked={clicked} setClicked={setClicked}/>
             ) : (
                 <div className={lstyles.logoContainer}>
-                    
+
                     <div className={lstyles.logo}>
                         <div className={lstyles.logoImg}>
                             <Image src="/imgs/quotes.png" width={80} height={80} alt="" />
                         </div>
-                        <div className={lstyles.brand}>&nbsp; QUOTED</div>
+                        <div className={lstyles.brand}>QUOTED</div>
                     </div>
 
                     <div className={lstyles.inputs}>
