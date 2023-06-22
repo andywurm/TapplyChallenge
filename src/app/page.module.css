@@ -3,11 +3,24 @@
   display: flex;
   text-align: center;
   min-height: 10vh;
-  font-size: 1.8em;
-  font-weight: 600;
-  justify-content: center;
   align-items: center;
-  color: rgba(76, 139, 255, 255);
+  width: 90%;
+  margin: 2.5% auto;
+}
+
+.logo{
+  flex-basis: 75%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  font-size:1.5em;
+  font-weight: 600;
+  letter-spacing: 3px;
+}
+
+.settings{
+  flex-basis: 25%;
+  text-align: right;
 }
 
 .bottomBar {
