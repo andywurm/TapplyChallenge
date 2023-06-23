@@ -40,4 +40,5 @@
   flex-direction: column;
   flex-basis: 25%;
   text-align: center;
+  opacity: .9;
 }
