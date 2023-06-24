@@ -6,8 +6,8 @@
 .container{
     border: solid rgb(188, 188, 188) 1px;
     border-radius: 5px;
-    width: 80%;
-    margin: 4% auto;
+    width: 90%;
+    margin: 7% auto;
     padding: 2%;
 }
 
@@ -23,8 +23,8 @@
     text-align: right;
     color: rgb(103, 103, 103);
     /* border: solid red 1px; */
-    width: 50%;
-    padding-right: 4% ;
+    width: 100%;
+    padding-right: 3% ;
 }
 
 .time{
@@ -63,6 +63,26 @@
     justify-content: right;
 }
 
-.changeBtns{
+.delete{
     padding-left:15%;
+}
+
+.update{
+    padding: 3% 10%;
+    background-color: rgba(76, 139, 255, 255);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: 1em;
+}
+
+.changeQuote{
+    width: 100%;
+    margin: 5% auto;
+    height: 10vh;
+    padding: 4% 2%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: solid rgb(160, 160, 160) 1px;
+    border-radius: 2px;
+    resize: none;
 }

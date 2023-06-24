@@ -32,6 +32,7 @@ const SignUp = (props: IPropsSignUp) => {
     const [password, setPassword] = useState("");
 
     const createUser = async () => {
+        
         await addDoc(usersCollectionRef,{
             first: first,
             last: last,

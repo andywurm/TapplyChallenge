@@ -81,3 +81,9 @@
   width: 80%;
   margin: 10% auto 5% auto;
 }
+
+.quoteContainer {
+  width: 90%;
+  margin: 0 auto;
+  /* border: solid red 1px; */
+}

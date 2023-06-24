@@ -4,24 +4,31 @@ import Image from "next/image";
 import Quotes from "../Quotes/Quotes";
 import { PostType, UserContext } from "../../Context/UserContext";
 import { db } from '../../firebase-config'
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore"
+import { collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore"
 
 const Profile = () => {
 
   const [users, setUsers] = useState<any>([])
-  const usersCollectionRef = collection(db, "users")
+  const [userposts, setUserPosts] = useState<any>([])
   let context = useContext(UserContext)
+  const usersCollectionRef = collection(db, "users")
+  const listCollectionRef = doc(db, "quotelist", context.masterList)
 
   useEffect(() => {
 
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef)
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+
     }
+
+    const getPosts = onSnapshot(doc(db, "users", context.user.id), (doc) => {
+      setUserPosts(doc.data().posts)
+    });
 
     getUsers()
 
-  }, [])
+  }, [context.user,usersCollectionRef])
 
   const [edit, setEdit] = useState(false);
   const [first, setFirst] = useState(context.user.first);
@@ -147,9 +154,9 @@ const Profile = () => {
           {context.user.posts.length > 0 ? (
             <div>
               <div className={pstyles.yourPosts}>Your Posts</div>
-              {context.user.posts.map((post: PostType) => {
+              {userposts.reverse().map((post: PostType) => {
                 return (
-                  <div key={post.id}>
+                  <div key={post.id} className={pstyles.quoteContainer}>
                     <Quotes username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id} />
                   </div>
                 );
