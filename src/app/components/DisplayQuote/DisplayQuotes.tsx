@@ -1,41 +1,76 @@
 "use client";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Quotes from "../Quotes/Quotes";
 import dqstyles from "./DisplayQuote.module.css";
 import Image from "next/image";
+import { PostType, UserContext } from "@/app/Context/UserContext";
+import { v4 as uuidv4 } from 'uuid';
+import { db } from '../../firebase-config'
+import { collection, doc, getDocs, updateDoc, arrayUnion } from "firebase/firestore"
 
-interface IPropsDisplayQuote {
-  user: any;
-}
+const DisplayQuotes = () => {
 
-const DisplayQuotes = (props: IPropsDisplayQuote) => {
   const [clicked, setClicked] = useState(false);
   const [newPost, setNewPost] = useState("");
+  const [feed, setFeed] = useState<any>([])
 
-  function postQuote() {
+  let context = useContext(UserContext)
+  const postCollectionRef = doc(db, "users", context.user.id.toString())
+  const listCollectionRef = doc(db, "quotelist", context.masterList)
+  const feedCollectionRef = collection(db, "quotelist")
 
-    setClicked(!clicked);
+  useEffect(() => {
+
+    const getFeed = async () => {
+
+      const data = await getDocs(feedCollectionRef)
+      setFeed(data.docs.map((doc) => ({ ...doc.data()})))
+
+    }
+
+    getFeed()
+    
+   
+  }, [context.user])
+
+  const postQuote = async () => {
 
     if (newPost !== "") {
-      console.log(newPost);
+
+      const createPost = {
+        id: uuidv4(),
+        username: context.user.username,
+        likes: 0,
+        quote: newPost,
+        time: new Date()
+      }
+
+      await updateDoc(postCollectionRef, {
+        posts: arrayUnion(createPost)
+      });
+
+      await updateDoc(listCollectionRef, {
+        masterlist: arrayUnion(createPost)
+      });
+
     }
-    
+
+    setNewPost("")
+    setClicked(!clicked);
+
   }
+
+  console.log(feed[0])
 
   return (
     <div className={dqstyles.homeContainer}>
       {clicked ? (
         <div className={dqstyles.inputArea1}>
           <div className={dqstyles.controls}>
+            
             <div className={dqstyles.userInfo}>
-              <Image
-                src={props.user.pfp}
-                width={40}
-                height={40}
-                alt=""
-                className={dqstyles.pfp}
-              />
-              &nbsp; @{props.user.username}
+              <Image src='/imgs/blank-pfp.png' width={40} height={40} alt="" className={dqstyles.pfp}/>
+              &nbsp; @{context.user.username}
             </div>
 
             <div className={dqstyles.postBtnCon}>
@@ -43,7 +78,9 @@ const DisplayQuotes = (props: IPropsDisplayQuote) => {
                 Post
               </button>
             </div>
+
           </div>
+
           <textarea
             className={dqstyles.inputs}
             onChange={(e) => setNewPost(e.target.value)}
@@ -52,27 +89,23 @@ const DisplayQuotes = (props: IPropsDisplayQuote) => {
         </div>
       ) : (
         <div className={dqstyles.inputArea}>
-          <Image
-            src={props.user.pfp}
-            width={40}
-            height={40}
-            alt=""
-            className={dqstyles.pfp}
-          />
-          <div
-            className={dqstyles.textArea}
-            onClick={() => setClicked(!clicked)}
-          >
+
+          <Image src='/imgs/blank-pfp.png' width={40} height={40} alt="" className={dqstyles.pfp}/>
+
+          <div className={dqstyles.textArea} onClick={() => setClicked(!clicked)}>
             Type Your Quote Here!
           </div>
+
         </div>
       )}
 
       <div className={dqstyles.feed}>
         <div className={dqstyles.recentPosts}>Recent Posts</div>
-        {/* <div>
-            <Quotes/>
-        </div> */}
+        <div className={dqstyles.feedContainer}>
+          { feed.length > 0 && feed[0].masterlist.map((post:PostType) => {
+            return(<Quotes key={post.id} username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id}/>)
+          })} 
+        </div>
       </div>
     </div>
   );

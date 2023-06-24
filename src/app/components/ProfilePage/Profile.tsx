@@ -1,25 +1,68 @@
-"use client";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import pstyles from "./Profile.module.css";
 import Image from "next/image";
 import Quotes from "../Quotes/Quotes";
+import { PostType, UserContext } from "../../Context/UserContext";
+import { db } from '../../firebase-config'
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore"
 
-interface IPropsProfile {
-  user: any;
-}
-const Profile = (props: IPropsProfile) => {
+const Profile = () => {
+
+  const [users, setUsers] = useState<any>([])
+  const usersCollectionRef = collection(db, "users")
+  let context = useContext(UserContext)
+
+  useEffect(() => {
+
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef)
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+
+    getUsers()
+
+  }, [])
+
   const [edit, setEdit] = useState(false);
-  const [first, setFirst] = useState(props.user.first);
-  const [last, setLast] = useState(props.user.last);
-  const [username, setUsername] = useState(props.user.username);
-  const [email, setEmail] = useState(props.user.email);
-  const [DOB, setDOB] = useState(props.user.DOB);
+  const [first, setFirst] = useState(context.user.first);
+  const [last, setLast] = useState(context.user.last);
+  const [username, setUsername] = useState(context.user.username);
+  const [email, setEmail] = useState(context.user.email);
+  const [password, setPassword] = useState(context.user.password);
+
+  const updateUser = async () => {
+
+    const userDoc = doc(db, "users", context.user.id)
+
+    await updateDoc(userDoc, {
+      first: first,
+      last: last,
+      username: username,
+      email: email,
+      password: password
+    })
+    context.setUser(
+      {
+        first: first,
+        last: last,
+        username: username,
+        email: email,
+        password: password,
+        id: context.user.id,
+        pfp: context.user.pfp,
+        posts: context.user.posts
+      }
+    )
+    setEdit(!edit)
+  }
 
   return (
     <div>
+
       <div className={pstyles.userPfp}>
+
         <Image
-          src={props.user.pfp}
+          src='/imgs/blank-pfp.png'
           width={110}
           height={110}
           alt=""
@@ -32,14 +75,14 @@ const Profile = (props: IPropsProfile) => {
 
         <div className={pstyles.userNames}>
           <div className={pstyles.fullName}>
-            {props.user.first} {props.user.last}
+            {context.user.first} {context.user.last}
           </div>
-          <div className={pstyles.username}>@{props.user.username}</div>
+          <div className={pstyles.username}>@{context.user.username}</div>
         </div>
 
         <div className={pstyles.btnContainer}>
           {edit ? (
-            <button className={pstyles.editBtn} onClick={() => setEdit(!edit)}>
+            <button className={pstyles.editBtn} onClick={() => updateUser()}>
               Save Changes
             </button>
           ) : (
@@ -85,8 +128,12 @@ const Profile = (props: IPropsProfile) => {
             />
           </div>
           <div className={pstyles.info}>
-            Birthday:
-            <input className={pstyles.inputs} value={DOB} disabled />
+            Password:
+            <input
+              className={pstyles.inputs}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
         </div>
       ) : (
@@ -97,13 +144,13 @@ const Profile = (props: IPropsProfile) => {
         <div style={{ height: "10vh" }}></div>
       ) : (
         <div className={pstyles.userPosts}>
-          {props.user.posts.length > 0 ? (
+          {context.user.posts.length > 0 ? (
             <div>
               <div className={pstyles.yourPosts}>Your Posts</div>
-              {props.user.posts.map((post: any) => {
+              {context.user.posts.map((post: PostType) => {
                 return (
                   <div key={post.id}>
-                    <Quotes user={props.user} post={post} />
+                    <Quotes username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id} />
                   </div>
                 );
               })}
@@ -117,8 +164,10 @@ const Profile = (props: IPropsProfile) => {
               Aww, No Posts Yet.
             </div>
           )}
+
         </div>
       )}
+
     </div>
   );
 };

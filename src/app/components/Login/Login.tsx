@@ -1,22 +1,50 @@
 import Image from "next/image";
 import lstyles from "./Login.module.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SignUp from "../SignUp/SignUp";
+import { UserContext } from "../../Context/UserContext";
+import { db } from '../../firebase-config'
+import { collection, getDocs } from "firebase/firestore"
 
 const Login = () => {
+
+    const [users, setUsers] = useState<any>([])
+    const usersCollectionRef = collection(db, "users")
+    let context = useContext(UserContext)
+
+    useEffect(() => {
+
+        const getUsers = async () => {
+            const data = await getDocs(usersCollectionRef)
+            setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        }
+
+        getUsers()
+
+    }, [usersCollectionRef])
+
+    // console.log(...users)
 
     const [clicked, setClicked] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     function letsLogIn() {
-        console.log(email + " " + password);
+
+        users.map((user: any) => {
+
+            if (user.password === password && user.email === email) {
+                context.setUser(user)
+            }
+
+        })
+
     }
 
     return (
         <div>
             {clicked ? (
-                <SignUp clicked={clicked} setClicked={setClicked}/>
+                <SignUp clicked={clicked} setClicked={setClicked} />
             ) : (
                 <div className={lstyles.logoContainer}>
 
@@ -34,6 +62,7 @@ const Login = () => {
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                         Password:
                         <input
@@ -42,6 +71,7 @@ const Login = () => {
                             placeholder="Password"
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
+                            required
                         />
                     </div>
 
@@ -58,7 +88,7 @@ const Login = () => {
                 </div>
             )}
 
-            
+
         </div>
     )
 }

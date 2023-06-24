@@ -1,6 +1,8 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import sustyles from "./SignUp.module.css";
 import Image from "next/image";
+import { db } from '../../firebase-config'
+import { collection, getDocs, addDoc } from "firebase/firestore"
 
 interface IPropsSignUp{
     clicked: boolean
@@ -9,15 +11,37 @@ interface IPropsSignUp{
 
 const SignUp = (props: IPropsSignUp) => {
 
+    const [users, setUsers] = useState<any>([])
+    const usersCollectionRef = collection(db, "users")
+
+    useEffect(() => {
+
+        const getUsers = async () => {
+            const data = await getDocs(usersCollectionRef)
+            setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        }
+
+        getUsers()
+
+    }, [])
+
     const [first, setFirst] = useState("")
     const [last, setLast] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [DOB, setDOB] = useState(Date)
 
-    function letsSignUp(){
-        
+    const createUser = async () => {
+        await addDoc(usersCollectionRef,{
+            first: first,
+            last: last,
+            username: username,
+            email: email,
+            password: password,
+            posts: []
+        })
+
+        props.setClicked(!props.clicked)
     }
 
     return (
@@ -46,11 +70,9 @@ const SignUp = (props: IPropsSignUp) => {
                 <input className={sustyles.inputs} value={email} onChange={(e) => setEmail(e.target.value)} />
                 <div className={sustyles.fields}>Password:</div>
                 <input className={sustyles.inputs} value={password} onChange={(e) => setPassword(e.target.value)} />
-                <div className={sustyles.fields}>Date of Birth:</div>
-                <input className={sustyles.inputs} value={DOB} type="date" onChange={(e) => setDOB(e.target.value)} />
-
+               
                 <div className={sustyles.logBtnContainer}>
-                    <button className={sustyles.logBtn} onClick={() => letsSignUp()}>
+                    <button className={sustyles.logBtn} onClick={() => createUser()}>
                         Sign up
                     </button>
                 </div>

@@ -1,39 +1,46 @@
 "use client"
+import { Timestamp } from "firebase/firestore";
 import * as React from "react";
 import { ReactNode, createContext, useState } from "react";
 
 const UserContext = createContext<UserContextType>({
     user: {
-        first: "Satomi",
-        last: "Ishihara",
-        username: "Satomi86",
-        email: "IshigamiKuniko@gmail.com",
-        DOB: new Date(),
-        pfp: "/imgs/blank-pfp.png",
+        id: "",
+        first: "",
+        last: "",
+        username: "",
+        email: "",
+        password: "",
+        pfp: "",
         posts: [],
     },
-    setUser: () => { }
+    setUser: () => { },
+    masterList: ""
 })
 
 export interface UserType {
+    id: string
     first: string
     last: string
     username: string
     email: string
-    DOB: Date
     pfp: string
+    password: string
     posts: PostType[]
 }
 
 export interface PostType {
-    time: string
+    id: string
+    time: Timestamp
     quote: string
     likes: number
+    username: string
 }
 
 interface UserContextType {
     user: UserType
     setUser: React.Dispatch<React.SetStateAction<UserType>>
+    masterList: string
 }
 
 interface IPropsUserProvider {
@@ -44,18 +51,21 @@ const UserProvider = (props: IPropsUserProvider) => {
 
     const [currentUser, setCurrentUser] = useState<UserType>(
         {
-            first: "Satomi",
-            last: "Ishihara",
-            username: "Satomi86",
-            email: "IshigamiKuniko@gmail.com",
-            DOB: new Date(),
-            pfp: "/imgs/blank-pfp.png",
+            id: "",
+            first: "",
+            last: "",
+            username: "",
+            email: "",
+            password: "",
+            pfp: "",
             posts: [],
         }
     );
 
+    const masterList = "2gIBGpf3f5xmr9JFY2o4"
+
     return (
-        <UserContext.Provider value={{ user: currentUser, setUser: setCurrentUser }}>
+        <UserContext.Provider value={{ user: currentUser, setUser: setCurrentUser, masterList: masterList, }}>
             {props.children}
         </UserContext.Provider>
     )
