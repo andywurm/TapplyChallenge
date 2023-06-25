@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useContext, useState } from "react";
 import { Timestamp, doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import { db } from "@/app/firebase-config";
-import { v4 as uuidv4 } from 'uuid';
 
 interface IPropsQuotes {
   username: string
@@ -93,8 +92,8 @@ const Quotes = (props: IPropsQuotes) => {
 
           <div className={qstyles.profileInfo}>
 
-            <Image
-              src={props.pfp === "" ? '/imgs/blank-pfp.png' : props.pfp}
+            <img
+              src={props.pfp === "" ? 'https://tapplychallenge.web.app/imgs/blank-pfp.png' : props.pfp}
               width={40} height={40} alt="" className={qstyles.pfp}
             />
             <div>
@@ -109,22 +108,22 @@ const Quotes = (props: IPropsQuotes) => {
           <div className={qstyles.postInfo}>
 
             <div className={qstyles.likeInfo} onClick={() => likePost()}>
-              <Image src="/imgs/love.png" width={23} height={23} alt="" className={qstyles.likes} />
+              <img src="https://tapplychallenge.web.app/imgs/love.png" width={23} height={23} alt="" className={qstyles.likes} />
               &nbsp; {props.likes}
             </div>
 
             {canChange ?
               <div className={qstyles.change}>
                 <div className={qstyles.changeBtns} onClick={() => setCanEdit(!canEdit)}>
-                  <Image src="/imgs/pencil.png" width={23} height={23} alt="" className={qstyles.deleteImg} />
+                  <img src="https://tapplychallenge.web.app/imgs/pencil.png" width={23} height={23} alt="" className={qstyles.deleteImg} />
                 </div>
                 <div className={qstyles.delete} onClick={() => deletePost()}>
-                  <Image src="/imgs/trash.png" width={23} height={23} alt="" className={qstyles.deleteImg} />
+                  <img src="https://tapplychallenge.web.app/imgs/trash.png" width={23} height={23} alt="" className={qstyles.deleteImg} />
                 </div>
               </div>
               :
               <div className={qstyles.change} onClick={() => deletePost()}>
-                <Image src="/imgs/bookmark.png" width={23} height={23} alt="" className={qstyles.deleteImg} />
+                <img src="https://tapplychallenge.web.app/imgs/bookmark.png" width={23} height={23} alt="" className={qstyles.deleteImg} />
               </div>
             }
 
@@ -136,8 +135,8 @@ const Quotes = (props: IPropsQuotes) => {
 
           <div className={qstyles.profileInfo}>
 
-            <Image
-              src='/imgs/blank-pfp.png'
+            <img
+              src='https://tapplychallenge.web.app/imgs/blank-pfp.png'
               width={40} height={40} alt="" className={qstyles.pfp}
             />
             <div>
@@ -157,7 +156,7 @@ const Quotes = (props: IPropsQuotes) => {
           <div className={qstyles.postInfo}>
 
             <div className={qstyles.likeInfo} onClick={() => likePost()}>
-              <Image src="/imgs/love.png" width={23} height={23} alt="" className={qstyles.likes} />
+              <img src="https://tapplychallenge.web.app/imgs/love.png" width={23} height={23} alt="" className={qstyles.likes} />
               &nbsp; {props.likes}
             </div>
 

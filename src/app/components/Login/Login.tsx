@@ -1,4 +1,3 @@
-import Image from "next/image";
 import lstyles from "./Login.module.css";
 import { useContext, useEffect, useState } from "react";
 import SignUp from "../SignUp/SignUp";
@@ -52,7 +51,7 @@ const Login = () => {
 
                     <div className={lstyles.logo}>
                         <div className={lstyles.logoImg}>
-                            <Image src="/imgs/quotes.png" width={80} height={80} alt="" />
+                            <img src="https://tapplychallenge.web.app/imgs/quotes.png" width={80} height={80} alt="" />
                         </div>
                         <div className={lstyles.brand}>QUOTED</div>
                     </div>

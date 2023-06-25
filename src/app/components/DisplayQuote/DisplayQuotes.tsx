@@ -77,7 +77,7 @@ const DisplayQuotes = () => {
           <div className={dqstyles.controls}>
 
             <div className={dqstyles.userInfo}>
-              <Image src={context.user.pfp === "" ? '/imgs/blank-pfp.png' : context.user.pfp} width={40} height={40} alt="" className={dqstyles.pfp} />
+              <img src={context.user.pfp === "" ? 'https://tapplychallenge.web.app/imgs/blank-pfp.png' : context.user.pfp} width={40} height={40} alt="" className={dqstyles.pfp} />
               &nbsp; @{context.user.username}
             </div>
 
@@ -98,7 +98,7 @@ const DisplayQuotes = () => {
       ) : (
         <div className={dqstyles.inputArea}>
 
-          <Image src={context.user.pfp === "" ? '/imgs/blank-pfp.png' : context.user.pfp} width={40} height={40} alt="" className={dqstyles.pfp} />
+          <img src={context.user.pfp === "" ? 'https://tapplychallenge.web.app/imgs/blank-pfp.png' : context.user.pfp} width={40} height={40} alt="" className={dqstyles.pfp} />
 
           <div className={dqstyles.textArea} onClick={() => setClicked(!clicked)}>
             Type Your Quote Here!

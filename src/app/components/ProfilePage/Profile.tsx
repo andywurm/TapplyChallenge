@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import pstyles from "./Profile.module.css";
-import Image from "next/image";
 import Quotes from "../Quotes/Quotes";
 import { PostType, UserContext } from "../../Context/UserContext";
 import { db, storage } from '../../firebase-config'
-import { collection, doc, getDocs, onSnapshot, updateDoc, writeBatch } from "firebase/firestore"
+import { collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore"
 import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage"
 
 const Profile = () => {
@@ -90,7 +89,9 @@ const Profile = () => {
     return (
       <div className={pstyles.uploadContainer}>
         <div className={pstyles.upload}>
-          <input type="file" onChange={(e) => setNewPfp(e.target.files ? e.target.files[0] : null)} />
+          <input type="file" 
+          placeholder={newPfp}
+          onChange={(e) => setNewPfp(e.target.files ? e.target.files[0] : null)} />
         </div>
       </div>
     )
@@ -103,8 +104,8 @@ const Profile = () => {
 
         <div className={pstyles.userPfp}>
 
-          <Image
-            src={pfpUrl === "" ? '/imgs/blank-pfp.png' : pfpUrl}
+          <img
+            src={pfpUrl === "" ? 'https://tapplychallenge.web.app/imgs/blank-pfp.png' : pfpUrl}
             width={110}
             height={110}
             alt=""
@@ -205,7 +206,7 @@ const Profile = () => {
             ) : (
               <div className={pstyles.noUserPosts}>
                 <div className={pstyles.icon}>
-                  <Image src="/imgs/chat.png" width={50} height={50} alt="" />
+                  <img src="https://tapplychallenge.web.app/imgs/chat.png" width={50} height={50} alt="" />
                 </div>
                 Aww, No Posts Yet.
               </div>

@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import sustyles from "./SignUp.module.css";
-import Image from "next/image";
 import { db } from '../../firebase-config'
 import { collection, getDocs, addDoc } from "firebase/firestore"
 
@@ -39,7 +38,8 @@ const SignUp = (props: IPropsSignUp) => {
             username: username,
             email: email,
             password: password,
-            posts: []
+            posts: [],
+            pfp: ""
         })
 
         props.setClicked(!props.clicked)
@@ -53,7 +53,7 @@ const SignUp = (props: IPropsSignUp) => {
                 <div className={sustyles.logo}>
 
                     <div className={sustyles.logoImg}>
-                        <Image src="/imgs/quotes.png" width={60} height={60} alt="" />
+                        <img src="https://tapplychallenge.web.app/imgs/quotes.png" width={60} height={60} alt="" />
                     </div>
 
                     <div className={sustyles.brand}> QUOTED</div>
