@@ -15,7 +15,7 @@ const DisplayQuotes = () => {
   const [feed, setFeed] = useState<any>([])
 
   let context = useContext(UserContext)
-  const postCollectionRef = doc(db, "users", context.user.id.toString())
+  const postCollectionRef = doc(db, "users", context.user.id)
   const listCollectionRef = doc(db, "quotelist", context.masterList)
   const feedCollectionRef = collection(db, "quotelist")
 
@@ -31,8 +31,6 @@ const DisplayQuotes = () => {
     getFeed()
 
   }, [context.user, listCollectionRef])
-
-  // console.log(feed)
 
   const postQuote = async () => {
 

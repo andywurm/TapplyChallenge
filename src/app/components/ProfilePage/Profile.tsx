@@ -9,26 +9,28 @@ import { collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firest
 const Profile = () => {
 
   const [users, setUsers] = useState<any>([])
+  const [newPfp, setNewPfp] = useState()
+  const [changePfp, setChangePfp] = useState(false)
   const [userposts, setUserPosts] = useState<any>([])
   let context = useContext(UserContext)
   const usersCollectionRef = collection(db, "users")
-  const listCollectionRef = doc(db, "quotelist", context.masterList)
 
   useEffect(() => {
 
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef)
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-
     }
 
     const getPosts = onSnapshot(doc(db, "users", context.user.id), (doc) => {
-      setUserPosts(doc.data().posts)
+      setUserPosts(doc.data()?.posts)
     });
 
     getUsers()
 
-  }, [context.user,usersCollectionRef])
+  }, [context.user])
+
+  // console.log(userposts)
 
   const [edit, setEdit] = useState(false);
   const [first, setFirst] = useState(context.user.first);
@@ -63,117 +65,137 @@ const Profile = () => {
     setEdit(!edit)
   }
 
+  const Upload = () => {
+    return (
+      <div className={pstyles.uploadContainer}>
+        <div className={pstyles.upload}>
+          <input type="file" />
+        </div>
+        <div className={pstyles.grayed}></div>
+      </div>
+    )
+  }
+
   return (
     <div>
 
-      <div className={pstyles.userPfp}>
+      { changePfp ? <Upload /> :
 
-        <Image
-          src='/imgs/blank-pfp.png'
-          width={110}
-          height={110}
-          alt=""
-          className={pstyles.pfp}
-          style={{
-            border: edit ? "dashed gray 2px" : "none",
-            padding: edit ? "2px" : "none",
-          }}
-        />
+        <div>
 
-        <div className={pstyles.userNames}>
-          <div className={pstyles.fullName}>
-            {context.user.first} {context.user.last}
-          </div>
-          <div className={pstyles.username}>@{context.user.username}</div>
-        </div>
+          <div className={pstyles.userPfp}>
 
-        <div className={pstyles.btnContainer}>
-          {edit ? (
-            <button className={pstyles.editBtn} onClick={() => updateUser()}>
-              Save Changes
-            </button>
-          ) : (
-            <button className={pstyles.editBtn} onClick={() => setEdit(!edit)}>
-              Edit Profile
-            </button>
-          )}
-        </div>
-      </div>
+            <Image
+              src='/imgs/blank-pfp.png'
+              width={110}
+              height={110}
+              alt=""
+              className={pstyles.pfp}
+              style={{
+                border: edit ? "dashed gray 2px" : "none",
+                padding: edit ? "2px" : "none",
+              }}
+              onClick={()=>setChangePfp(!changePfp)}
+            />
 
-      {edit ? (
-        <div className={pstyles.userInfo}>
-          <div className={pstyles.info}>
-            First Name:
-            <input
-              className={pstyles.inputs}
-              value={first}
-              onChange={(e) => setFirst(e.target.value)}
-            />
-          </div>
-          <div className={pstyles.info}>
-            Last Name:
-            <input
-              className={pstyles.inputs}
-              value={last}
-              onChange={(e) => setLast(e.target.value)}
-            />
-          </div>
-          <div className={pstyles.info}>
-            Username:
-            <input
-              className={pstyles.inputs}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className={pstyles.info}>
-            Email:
-            <input
-              className={pstyles.inputs}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className={pstyles.info}>
-            Password:
-            <input
-              className={pstyles.inputs}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-        </div>
-      ) : (
-        <div></div>
-      )}
-
-      {edit ? (
-        <div style={{ height: "10vh" }}></div>
-      ) : (
-        <div className={pstyles.userPosts}>
-          {context.user.posts.length > 0 ? (
-            <div>
-              <div className={pstyles.yourPosts}>Your Posts</div>
-              {userposts.reverse().map((post: PostType) => {
-                return (
-                  <div key={post.id} className={pstyles.quoteContainer}>
-                    <Quotes username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id} />
-                  </div>
-                );
-              })}
-              <div style={{ height: "10vh" }}></div>
-            </div>
-          ) : (
-            <div className={pstyles.noUserPosts}>
-              <div className={pstyles.icon}>
-                <Image src="/imgs/chat.png" width={50} height={50} alt="" />
+            <div className={pstyles.userNames}>
+              <div className={pstyles.fullName}>
+                {context.user.first} {context.user.last}
               </div>
-              Aww, No Posts Yet.
+              <div className={pstyles.username}>@{context.user.username}</div>
             </div>
+
+            <div className={pstyles.btnContainer}>
+              {edit ? (
+                <button className={pstyles.editBtn} onClick={() => updateUser()}>
+                  Save Changes
+                </button>
+              ) : (
+                <button className={pstyles.editBtn} onClick={() => setEdit(!edit)}>
+                  Edit Profile
+                </button>
+              )}
+            </div>
+
+          </div>
+
+          {edit ? (
+            <div className={pstyles.userInfo}>
+              <div className={pstyles.info}>
+                First Name:
+                <input
+                  className={pstyles.inputs}
+                  value={first}
+                  onChange={(e) => setFirst(e.target.value)}
+                />
+              </div>
+              <div className={pstyles.info}>
+                Last Name:
+                <input
+                  className={pstyles.inputs}
+                  value={last}
+                  onChange={(e) => setLast(e.target.value)}
+                />
+              </div>
+              <div className={pstyles.info}>
+                Username:
+                <input
+                  className={pstyles.inputs}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className={pstyles.info}>
+                Email:
+                <input
+                  className={pstyles.inputs}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className={pstyles.info}>
+                Password:
+                <input
+                  className={pstyles.inputs}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+          ) : (
+            <div></div>
           )}
 
+          {edit ? (
+            <div style={{ height: "10vh" }}></div>
+          ) : (
+            <div className={pstyles.userPosts}>
+              {context.user.posts.length > 0 ? (
+                <div>
+                  <div className={pstyles.yourPosts}>Your Posts</div>
+                  {context.user.posts.reverse().map((post: PostType) => {
+                    return (
+                      <div key={post.id} className={pstyles.quoteContainer}>
+                        <Quotes username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id} />
+                      </div>
+                    );
+                  })}
+                  <div style={{ height: "10vh" }}></div>
+                </div>
+              ) : (
+                <div className={pstyles.noUserPosts}>
+                  <div className={pstyles.icon}>
+                    <Image src="/imgs/chat.png" width={50} height={50} alt="" />
+                  </div>
+                  Aww, No Posts Yet.
+                </div>
+              )}
+
+            </div>
+
+          )}
         </div>
-      )}
+      }
 
     </div>
   );
