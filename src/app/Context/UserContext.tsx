@@ -35,6 +35,7 @@ export interface PostType {
     quote: string
     likes: number
     username: string
+    pfp: string
 }
 
 interface UserContextType {

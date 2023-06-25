@@ -12,6 +12,7 @@ interface IPropsQuotes {
   time: Timestamp
   likes: number
   id: string
+  pfp: string
 }
 
 const Quotes = (props: IPropsQuotes) => {
@@ -33,6 +34,11 @@ const Quotes = (props: IPropsQuotes) => {
       masterlist: arrayRemove(props)
     });
 
+    context.setUser({
+    ...context.user,
+    posts: context.user.posts.filter((i) => i.id !== props.id)
+    })
+
   }
 
   const likePost = () => {
@@ -48,7 +54,8 @@ const Quotes = (props: IPropsQuotes) => {
         username: props.username,
         likes: props.likes,
         quote: newPost,
-        time: props.time
+        time: props.time,
+        pfp: context.user.pfp
       }
 
       await updateDoc(userRef, {
@@ -87,7 +94,7 @@ const Quotes = (props: IPropsQuotes) => {
           <div className={qstyles.profileInfo}>
 
             <Image
-              src='/imgs/blank-pfp.png'
+              src={props.pfp === "" ? '/imgs/blank-pfp.png' : props.pfp}
               width={40} height={40} alt="" className={qstyles.pfp}
             />
             <div>

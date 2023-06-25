@@ -8,7 +8,6 @@
 
 .pfp {
   border-radius: 70px;
-  border: solid rgb(223, 223, 223) 1px;
 }
 
 .userNames {
@@ -86,4 +85,13 @@
   width: 90%;
   margin: 0 auto;
   /* border: solid red 1px; */
+}
+
+.uploadContainer{
+  border: solid rgb(147, 147, 147) 1px;
+  border-radius: 2px;
+  padding: 2%;
+  margin: 5% 0 1% 0;
+  display: flex;
+  justify-content: center;
 }

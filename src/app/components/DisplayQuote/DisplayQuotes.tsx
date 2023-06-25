@@ -6,7 +6,7 @@ import Image from "next/image";
 import { PostType, UserContext } from "@/app/Context/UserContext";
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase-config'
-import { collection, doc, getDocs, updateDoc, arrayUnion } from "firebase/firestore"
+import { collection, doc, getDocs, updateDoc, arrayUnion, Timestamp } from "firebase/firestore"
 
 const DisplayQuotes = () => {
 
@@ -41,7 +41,8 @@ const DisplayQuotes = () => {
         username: context.user.username,
         likes: 0,
         quote: newPost,
-        time: new Date()
+        time: new Date(),
+        pfp: context.user.pfp
       }
 
       await updateDoc(postCollectionRef, {
@@ -51,6 +52,14 @@ const DisplayQuotes = () => {
       await updateDoc(listCollectionRef, {
         masterlist: arrayUnion(createPost)
       });
+
+      context.setUser({
+        ...context.user,
+        posts:[...context.user.posts,{...createPost,
+          time: Timestamp.fromDate(createPost.time)
+        }]
+      })
+
 
     }
 
@@ -68,7 +77,7 @@ const DisplayQuotes = () => {
           <div className={dqstyles.controls}>
 
             <div className={dqstyles.userInfo}>
-              <Image src='/imgs/blank-pfp.png' width={40} height={40} alt="" className={dqstyles.pfp} />
+              <Image src={context.user.pfp === "" ? '/imgs/blank-pfp.png' : context.user.pfp} width={40} height={40} alt="" className={dqstyles.pfp} />
               &nbsp; @{context.user.username}
             </div>
 
@@ -89,7 +98,7 @@ const DisplayQuotes = () => {
       ) : (
         <div className={dqstyles.inputArea}>
 
-          <Image src='/imgs/blank-pfp.png' width={40} height={40} alt="" className={dqstyles.pfp} />
+          <Image src={context.user.pfp === "" ? '/imgs/blank-pfp.png' : context.user.pfp} width={40} height={40} alt="" className={dqstyles.pfp} />
 
           <div className={dqstyles.textArea} onClick={() => setClicked(!clicked)}>
             Type Your Quote Here!
@@ -101,7 +110,7 @@ const DisplayQuotes = () => {
       <div className={dqstyles.feed}>
         <div className={dqstyles.recentPosts}>Recent Posts</div>
         {feed.length > 0 && feed[0].masterlist.toReversed().map((post: PostType) => {
-          return (<Quotes key={post.id} username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id} />)
+          return (<Quotes key={post.id} username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id} pfp={post.pfp} />)
         })}
       </div>
     </div>

@@ -41,6 +41,8 @@ const Login = () => {
 
     }
 
+    // console.log(users)
+
     return (
         <div>
             {clicked ? (
