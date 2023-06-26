@@ -140,6 +140,7 @@ const Profile = () => {
 
         {edit ? (
           <div className={pstyles.userInfo}>
+
             <div className={pstyles.info}>
               First Name:
               <input
@@ -148,6 +149,7 @@ const Profile = () => {
                 onChange={(e) => setFirst(e.target.value)}
               />
             </div>
+
             <div className={pstyles.info}>
               Last Name:
               <input
@@ -156,6 +158,7 @@ const Profile = () => {
                 onChange={(e) => setLast(e.target.value)}
               />
             </div>
+
             <div className={pstyles.info}>
               Username:
               <input
@@ -164,6 +167,7 @@ const Profile = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
+
             <div className={pstyles.info}>
               Email:
               <input
@@ -172,6 +176,7 @@ const Profile = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+
             <div className={pstyles.info}>
               Password:
               <input
@@ -180,6 +185,7 @@ const Profile = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            
           </div>
         ) : (
           <div></div>

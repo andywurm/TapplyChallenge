@@ -1,8 +1,6 @@
-"use client";
 import { useContext, useEffect, useState } from "react";
 import Quotes from "../Quotes/Quotes";
 import dqstyles from "./DisplayQuote.module.css";
-import Image from "next/image";
 import { PostType, UserContext } from "@/app/Context/UserContext";
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase-config'

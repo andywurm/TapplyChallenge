@@ -13,8 +13,8 @@ const Page = () => {
 
   const [clicked, setClicked] = useState("Home");
   let context = useContext(UserContext)
-  
-  useEffect(() => {},[context.user])
+
+  useEffect(() => { }, [context.user])
 
   const DisplayMidSection = () => {
     if (clicked === "Home") {
@@ -36,19 +36,23 @@ const Page = () => {
           <main className={styles.main}>
 
             <div className={styles.top}>
+
               <div className={styles.logo}>
                 <img src="https://tapplychallenge.web.app/imgs/quotes.png" width={35} height={35} alt="" />
                 &nbsp; QUOTED
               </div>
+
               <div className={styles.settings}>
                 <img src="https://tapplychallenge.web.app/imgs/setting.png" width={30} height={30} alt="" />
               </div>
+
             </div>
 
             <DisplayMidSection />
 
             <div className={styles.bottom}>
               <div className={styles.bottomBar}>
+
                 <div
                   className={styles.barItems}
                   onClick={() => setClicked("Bookmark")}
@@ -73,8 +77,10 @@ const Page = () => {
                 >
                   <img src="https://tapplychallenge.web.app/imgs/user.png" width={25} height={25} alt="" />
                 </div>
+
               </div>
             </div>
+            
           </main>
           :
           <Login />
