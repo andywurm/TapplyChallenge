@@ -136,7 +136,7 @@ const Quotes = (props: IPropsQuotes) => {
           <div className={qstyles.profileInfo}>
 
             <img
-              src='https://tapplychallenge.web.app/imgs/blank-pfp.png'
+              src={props.pfp === "" ? 'https://tapplychallenge.web.app/imgs/blank-pfp.png' : props.pfp}
               width={40} height={40} alt="" className={qstyles.pfp}
             />
             <div>
