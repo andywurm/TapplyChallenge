@@ -52,6 +52,7 @@ const Profile = () => {
   const updateUser = async () => {
 
     const userDoc = doc(db, "users", context.user.id)
+    const listDoc = doc(db, "quotelist", context.masterList)
 
     await updateDoc(userDoc, {
       first: first,
@@ -77,6 +78,7 @@ const Profile = () => {
     if (newPfp !== null) {
       const imageRef = ref(storage, `images/${context.user.id}`)
       uploadBytes(imageRef, newPfp)
+  
     }
 
     setNewPfp(null)

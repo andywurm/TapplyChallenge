@@ -1,6 +1,5 @@
 import { UserContext } from "@/app/Context/UserContext";
 import qstyles from "./Quotes.module.css";
-import Image from "next/image";
 import { useContext, useState } from "react";
 import { Timestamp, doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import { db } from "@/app/firebase-config";
@@ -19,7 +18,7 @@ const Quotes = (props: IPropsQuotes) => {
   let context = useContext(UserContext)
   const [canChange, setCanChange] = useState(props.username === context.user.username)
   const [canEdit, setCanEdit] = useState(false)
-  const [newPost, setNewPost] = useState("")
+  const [newPost, setNewPost] = useState(props.quote)
   const userRef = doc(db, 'users', context.user.id);
   const quoteRef = doc(db, 'quotelist', context.masterList);
 
@@ -34,8 +33,8 @@ const Quotes = (props: IPropsQuotes) => {
     });
 
     context.setUser({
-    ...context.user,
-    posts: context.user.posts.filter((i) => i.id !== props.id)
+      ...context.user,
+      posts: context.user.posts.filter((i) => i.id !== props.id)
     })
 
   }
@@ -60,7 +59,7 @@ const Quotes = (props: IPropsQuotes) => {
       await updateDoc(userRef, {
         posts: arrayRemove(props)
       });
-  
+
       await updateDoc(quoteRef, {
         masterlist: arrayRemove(props)
       });
@@ -68,7 +67,7 @@ const Quotes = (props: IPropsQuotes) => {
       await updateDoc(userRef, {
         posts: arrayUnion(createPost)
       });
-  
+
       await updateDoc(quoteRef, {
         masterlist: arrayUnion(createPost)
       });
@@ -100,7 +99,10 @@ const Quotes = (props: IPropsQuotes) => {
               <div className={qstyles.username}>@{props.username}</div>
               <div className={qstyles.time}>{time[0]}</div>
             </div>
-
+            <div className={qstyles.timeExact}>
+              <div>{time[1]}</div>
+            </div>
+            
           </div>
 
           <div className={qstyles.quote}>&quot;{props.quote}&quot;</div>
@@ -146,11 +148,11 @@ const Quotes = (props: IPropsQuotes) => {
 
           </div>
 
-          <textarea 
-          className={qstyles.changeQuote} 
-          onChange={(e) => setNewPost(e.target.value)}
-          value={newPost}
-          > 
+          <textarea
+            className={qstyles.changeQuote}
+            onChange={(e) => setNewPost(e.target.value)}
+            value={newPost}
+          >
           </textarea>
 
           <div className={qstyles.postInfo}>
@@ -160,7 +162,7 @@ const Quotes = (props: IPropsQuotes) => {
               &nbsp; {props.likes}
             </div>
 
-            <div className={qstyles.change} onClick={()=>updatePost()}>
+            <div className={qstyles.change} onClick={() => updatePost()}>
               <button className={qstyles.update}>Update</button>
             </div>
 

@@ -35,6 +35,16 @@
     /* border: solid red 1px; */
 }
 
+.timeExact{
+     /* border: solid red 1px; */
+     width: 70%;
+     text-align: right;
+     font-size: .8em;
+     align-self: normal;
+     padding: 2%;
+     color: gray;
+}
+
 .quote{
     padding: 7% 2%;
     line-height: 1.5;
@@ -77,6 +87,7 @@
 
 .changeQuote{
     width: 100%;
+    color: rgb(89, 89, 89);
     margin: 5% auto;
     height: 10vh;
     padding: 4% 2%;
