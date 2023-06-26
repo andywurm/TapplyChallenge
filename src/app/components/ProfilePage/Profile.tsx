@@ -42,8 +42,6 @@ const Profile = () => {
 
   }, [context.user])
 
-  // console.log(userposts)
-
   const [edit, setEdit] = useState(false);
   const [first, setFirst] = useState(context.user.first);
   const [last, setLast] = useState(context.user.last);
@@ -194,7 +192,7 @@ const Profile = () => {
             {context.user.posts.length > 0 ? (
               <div>
                 <div className={pstyles.yourPosts}>Your Posts</div>
-                {context.user.posts.reverse().map((post: PostType) => {
+                {userposts.toReversed().map((post: PostType) => {
                   return (
                     <div key={post.id} className={pstyles.quoteContainer}>
                       <Quotes username={post.username} quote={post.quote} time={post.time} likes={post.likes} id={post.id} pfp={post.pfp} />
